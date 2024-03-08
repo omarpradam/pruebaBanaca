@@ -1,7 +1,10 @@
 package com.prueba.prueba.entity;
 
-import java.sql.Date;
 
+
+import java.util.Date;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,20 +12,28 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Usuarios")
+@Table(name="usuarios")
 public class Usuarios {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-
+    @Column(name = "tipo_identificacion")
     private String tipoIdentificacion;
+    @Column(name = "numero_identificacion")
     private String numeroIdentificacion;
+    @Column(name = "nombres")
     private String nombres;
+    @Column(name = "apellido")
     private String apellido;
+    @Column(name = "correo_electronico")
     private String correoElectronico;
+    @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
+    @Column(name = "fecha_creacion")
     private Date fechaCreacion;
+    @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
     public Usuarios() {

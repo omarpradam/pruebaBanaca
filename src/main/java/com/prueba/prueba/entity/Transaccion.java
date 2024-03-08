@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,20 +20,14 @@ public class Transaccion {
     private String tipoTransaccion;
     private BigDecimal monto;
     private Date fecha;
-
-    @ManyToOne
-    @JoinColumn(name = "cuenta_origen_id")
-    private Cuenta cuentaOrigen;
-
-    @ManyToOne
-    @JoinColumn(name = "cuenta_destino_id")
-    private Cuenta cuentaDestino;
+    private String cuentaOrigen;
+    private String cuentaDestino;
 
     public Transaccion() {
-        // Constructor vacío requerido por JPA
+        
     }
 
-    // Getters y Setters
+   
     
     public Long getId() {
         return id;
@@ -69,19 +61,20 @@ public class Transaccion {
         this.fecha = fecha;
     }
 
-    public Cuenta getCuentaOrigen() {
+    public String getCuentaOrigen() {
         return cuentaOrigen;
     }
 
-    public void setCuentaOrigen(Cuenta cuentaOrigen) {
-        this.cuentaOrigen = cuentaOrigen;
-    }
-
-    public Cuenta getCuentaDestino() {
+    public String getCuentaDestino() {
         return cuentaDestino;
     }
 
-    public void setCuentaDestino(Cuenta cuentaDestino) {
+    public void setCuentaOrigen(String cuentaOrigen) {
+        this.cuentaOrigen = cuentaOrigen;
+    }
+
+    public void setCuentaDestino(String cuentaDestino) {
         this.cuentaDestino = cuentaDestino;
     }
+
 }
