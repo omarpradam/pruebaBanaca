@@ -15,7 +15,7 @@ public class CuentasRespositoryServiceImpl implements CuentasRepositoryService {
 
     @Override
     public Cuenta save(Cuenta cuenta) {
-        
+
         return cuentasRepository.save(cuenta);
     }
 
@@ -23,6 +23,20 @@ public class CuentasRespositoryServiceImpl implements CuentasRepositoryService {
     public Cuenta searchByDocument(String document) {
         Cuenta cuentaTem = cuentasRepository.findByUsuario(document);
         return cuentaTem;
+    }
+
+    @Override
+    public Cuenta findByNumeroCuenta(String numeroCuenta) {
+
+        Cuenta cuentaTem = cuentasRepository.findByNumeroCuenta(numeroCuenta);
+
+        return cuentaTem;
+    }
+
+    @Override
+    public Cuenta searchByNumCuentaACuenta(String document, String numeroCuenta) {
+        Cuenta cuenta = cuentasRepository.findByUserCuenta(document, numeroCuenta);
+        return cuenta;
     }
 
 }

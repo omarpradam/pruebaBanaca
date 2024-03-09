@@ -10,11 +10,15 @@ import com.prueba.prueba.dto.TransaccionDto;
 import com.prueba.prueba.entity.Cuenta;
 import com.prueba.prueba.entity.Movimientos;
 import com.prueba.prueba.repository.CuentasRepository;
+import com.prueba.prueba.repository.service.impl.CuentasRespositoryServiceImpl;
 import com.prueba.prueba.repository.service.impl.MovimientosRepositoryServiceImpl;
 import com.prueba.prueba.transacciones.infrastucture.ITransaccionesService;
 
 @Service("TransaccionesServiceImpl")
 public class TransaccionesServiceImpl implements ITransaccionesService {
+
+    @Autowired
+    private  CuentasRespositoryServiceImpl cuentasRespositoryServiceImpl;
 
     @Autowired
     private CuentasRepository cuentasRepository;
@@ -28,10 +32,10 @@ public class TransaccionesServiceImpl implements ITransaccionesService {
 
     public ResponsDto serviceRetiro(TransaccionDto transaccionDto) {
 
-        Cuenta cuentaTem = cuentasRepository.findByUserCuenta(transaccionDto.getNumeroDocumento(),
+        Cuenta cuentaTem = cuentasRespositoryServiceImpl.searchByNumCuentaACuenta(transaccionDto.getNumeroDocumento(),
                 transaccionDto.getNumeroCuentaSalida());
 
-        if (cuentaTem.getNumeroCuenta() == null) {
+        if (cuentaTem == null) {
 
             return new ResponsDto("Cuenta no encontrada", "400", null);
 
@@ -58,10 +62,10 @@ public class TransaccionesServiceImpl implements ITransaccionesService {
 
     public ResponsDto serviceConsignacion(TransaccionDto transaccionDto) {
 
-        Cuenta cuentaTem = cuentasRepository.findByUserCuenta(transaccionDto.getNumeroDocumento(),
+        Cuenta cuentaTem = cuentasRespositoryServiceImpl.searchByNumCuentaACuenta(transaccionDto.getNumeroDocumento(),
                 transaccionDto.getNumeroCuentaDestino());
 
-        if (cuentaTem.getNumeroCuenta() == null)
+        if (cuentaTem== null)
             return new ResponsDto("Cuenta no encontrada", "400", null);
 
         Float monto = Float.parseFloat(transaccionDto.getMonto());
@@ -88,15 +92,15 @@ public class TransaccionesServiceImpl implements ITransaccionesService {
 
         Movimientos movimientoTemTrans = new Movimientos();
         //se validan si las cuentas enviadas existen en la BD
-        Cuenta cuentaTem = cuentasRepository.findByUserCuenta(transaccionDto.getNumeroDocumento(),
+        Cuenta cuentaTem = cuentasRespositoryServiceImpl.searchByNumCuentaACuenta(transaccionDto.getNumeroDocumento(),
                 transaccionDto.getNumeroCuentaSalida());
 
-        if (cuentaTem.getNumeroCuenta() == null)
+        if (cuentaTem == null)
             return new ResponsDto("Cuenta no encontrada", "400", null);
 
-        Cuenta cuentaDestino = cuentasRepository.findByNumeroCuenta(transaccionDto.getNumeroCuentaDestino());
+        Cuenta cuentaDestino = cuentasRespositoryServiceImpl.findByNumeroCuenta(transaccionDto.getNumeroCuentaDestino());
 
-        if (cuentaDestino.getNumeroCuenta() == null)
+        if (cuentaDestino== null)
             return new ResponsDto("Cuenta no encontrada", "400", null);
 
         serviceConsignacionTransferencia(transaccionDto);
@@ -125,9 +129,9 @@ public class TransaccionesServiceImpl implements ITransaccionesService {
     public ResponsDto serviceConsignacionTransferencia(TransaccionDto transaccionDto) {
 
         Movimientos movimientoTemCo = new Movimientos();
-        Cuenta cuentaDestino = cuentasRepository.findByNumeroCuenta(transaccionDto.getNumeroCuentaDestino());
+        Cuenta cuentaDestino = cuentasRespositoryServiceImpl.findByNumeroCuenta(transaccionDto.getNumeroCuentaDestino());
 
-        if (cuentaDestino.getNumeroCuenta() == null)
+        if (cuentaDestino == null)
             return new ResponsDto("Cuenta no encontrada", "400", null);
 
 

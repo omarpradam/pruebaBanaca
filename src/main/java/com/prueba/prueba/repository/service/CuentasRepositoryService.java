@@ -6,4 +6,7 @@ public interface CuentasRepositoryService {
 
     public Cuenta save(Cuenta cuenta);
 	public Cuenta searchByDocument(String document);
+    public Cuenta  findByNumeroCuenta(String numeroCuenta);
+
+    public Cuenta  searchByNumCuentaACuenta(String document, String numeroCuenta);
 }

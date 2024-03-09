@@ -156,9 +156,9 @@ public class CuentasServiceImpl implements ICuentasService {
 
         EstadoDto estadoTem = new EstadoDto();
 
-        Cuenta cuentaTem = cuentasRepository.findByNumeroCuenta(numeroCuenta);
-        if(cuentaTem.getEstado() == null)
-        return new ResponsDto("Producto no encontrado", "400", estadoTem);
+        Cuenta cuentaTem = cuentasRespositoryServiceImpl.findByNumeroCuenta(numeroCuenta);
+        if(cuentaTem == null)
+        return new ResponsDto("Producto no encontrado", "400", null);
 
         estadoTem.setEstado(cuentaTem.getEstado());
         estadoTem.setNumeroCuenta(cuentaTem.getNumeroCuenta());
