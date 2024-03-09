@@ -117,7 +117,7 @@ public class UsuariosServiceImpl implements IUsuariosService {
                 .searchByDocument(usuariosDto.getUsuarios().getNumeroIdentificacion());
 
         if (cuentaTem == null)
-            return new ResponsDto("Usuario no puede ser eliminado ya que tiene una cuenta acignada", "400",
+            return new ResponsDto("Usuario no puede ser eliminado ya que tiene una cuenta", "400",
                     usuariosDto);
 
         usuariosRepositoryServiceImpl.deleteUsuarios(userTem);
