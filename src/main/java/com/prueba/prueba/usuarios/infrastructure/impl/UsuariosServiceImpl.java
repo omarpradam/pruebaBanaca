@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.prueba.prueba.dto.ResponsDto;
 import com.prueba.prueba.dto.UsuariosDto;
+import com.prueba.prueba.entity.Cuenta;
 import com.prueba.prueba.entity.Usuarios;
+import com.prueba.prueba.repository.service.impl.CuentasRespositoryServiceImpl;
 import com.prueba.prueba.repository.service.impl.UsuariosRepositoryServiceImpl;
 import com.prueba.prueba.usuarios.infrastructure.IUsuariosService;
 
@@ -20,8 +22,11 @@ public class UsuariosServiceImpl implements IUsuariosService {
     @Autowired
     private UsuariosRepositoryServiceImpl usuariosRepositoryServiceImpl;
 
+    @Autowired
+    private CuentasRespositoryServiceImpl cuentasRespositoryServiceImpl;
+
     @Override
-    //servicio para la creacion de un usuario
+    // servicio para la creacion de un usuario
     public ResponsDto createUser(UsuariosDto usuariosDto) throws Exception {
 
         Usuarios user = usuariosDto.getUsuarios();
@@ -74,7 +79,7 @@ public class UsuariosServiceImpl implements IUsuariosService {
         return new ResponsDto("Usuario creado con exito", "200", usuariosDto);
     }
 
-// servicio para la modificacion de un usuario 
+    // servicio para la modificacion de un usuario
     @Override
     public ResponsDto updateUser(UsuariosDto usuariosDto) throws Exception {
 
@@ -97,16 +102,23 @@ public class UsuariosServiceImpl implements IUsuariosService {
         return new ResponsDto("Usuario modificado con exito", "200", usuariosDto);
     }
 
-// servicio para la eliminacion de un usuario 
+    // servicio para la eliminacion de un usuario
     @Override
     public ResponsDto deleteUser(UsuariosDto usuariosDto) throws Exception {
 
         Usuarios user = usuariosDto.getUsuarios();
-        
+
         Usuarios userTem = usuariosRepositoryServiceImpl.searchByDocument(user.getNumeroIdentificacion());
-        if (userTem==null) {
+        if (userTem == null) {
             return new ResponsDto("El usuario no existe en BD", "400", null);
         }
+
+        Cuenta cuentaTem = cuentasRespositoryServiceImpl
+                .searchByDocument(usuariosDto.getUsuarios().getNumeroIdentificacion());
+
+        if (cuentaTem == null)
+            return new ResponsDto("Usuario no puede ser eliminado ya que tiene una cuenta acignada", "400",
+                    usuariosDto);
 
         usuariosRepositoryServiceImpl.deleteUsuarios(userTem);
 

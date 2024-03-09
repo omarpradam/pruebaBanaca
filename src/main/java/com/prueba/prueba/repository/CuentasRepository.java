@@ -9,10 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.prueba.prueba.entity.Cuenta;
 
+
 @Repository("CuentasRepository")
 public interface CuentasRepository extends JpaRepository<Cuenta, Serializable> {
 
     Cuenta findByUsuario(String usuario);
+
+    Cuenta findByNumeroCuenta(String numeroCuenta);
 
     // SELECT * FROM Cuentas WHERE usuario_id = '12345678' AND numero_cuenta =
     // '3315101039'

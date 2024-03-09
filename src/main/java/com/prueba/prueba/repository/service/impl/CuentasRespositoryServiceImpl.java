@@ -15,7 +15,7 @@ public class CuentasRespositoryServiceImpl implements CuentasRepositoryService {
 
     @Override
     public Cuenta save(Cuenta cuenta) {
-        // TODO Auto-generated method stub
+        
         return cuentasRepository.save(cuenta);
     }
 
