@@ -3,6 +3,8 @@ package com.prueba.prueba.cuentas.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,5 +57,16 @@ public @ResponseBody ResponsDto updateState(@RequestBody CuentasDto cuentasDto) 
         e.getMessage();
         return responsDto = new ResponsDto("Error", "400", false);
     }
+}
+
+  @GetMapping( value = "/estado/{numeroCuenta}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponsDto cuntaState(@PathVariable String numeroCuenta) {
+        try {
+            
+            return cuentasServiceImpl.estadoProcuto(numeroCuenta);
+        } catch (Exception e) {
+            e.getMessage();
+            return responsDto = new ResponsDto("Error", "400", false);
+        }
 }
 }

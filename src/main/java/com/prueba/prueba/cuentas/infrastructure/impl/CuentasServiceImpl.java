@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.prueba.prueba.cuentas.infrastructure.ICuentasService;
 import com.prueba.prueba.dto.CuentasDto;
+import com.prueba.prueba.dto.EstadoDto;
 import com.prueba.prueba.dto.ResponsDto;
 import com.prueba.prueba.entity.Cuenta;
 import com.prueba.prueba.entity.Usuarios;
@@ -149,6 +150,21 @@ public class CuentasServiceImpl implements ICuentasService {
 
         String regex = "^(Activa|Inactiva|Cancelada)$";
         return Pattern.matches(regex, estado);
+    }
+
+    public ResponsDto estadoProcuto(String numeroCuenta){
+
+        EstadoDto estadoTem = new EstadoDto();
+
+        Cuenta cuentaTem = cuentasRepository.findByNumeroCuenta(numeroCuenta);
+        if(cuentaTem.getEstado() == null)
+        return new ResponsDto("Producto no encontrado", "400", estadoTem);
+
+        estadoTem.setEstado(cuentaTem.getEstado());
+        estadoTem.setNumeroCuenta(cuentaTem.getNumeroCuenta());
+        estadoTem.setSaldo(cuentaTem.getSaldo().toString());
+
+        return new ResponsDto("El estado de su producto es", "200", estadoTem);
     }
 
 }
