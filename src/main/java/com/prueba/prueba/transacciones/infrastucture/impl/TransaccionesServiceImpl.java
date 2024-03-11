@@ -116,7 +116,7 @@ public class TransaccionesServiceImpl implements ITransaccionesService {
 
         movimientoTemTrans.setFechaMovimiento(day);
         movimientoTemTrans.setMonto(saldo.toString());
-        movimientoTemTrans.setNumeroCuenta(transaccionDto.getNumeroCuentaDestino());
+        movimientoTemTrans.setNumeroCuenta(transaccionDto.getNumeroCuentaSalida());
         movimientoTemTrans.setTipoMovimiento("TRANSACCION");
         movimientoTemTrans.setNumeroDocumento(transaccionDto.getNumeroDocumento());
         movimientoTemTrans.setSaldoActual(saldoActual.toString());
